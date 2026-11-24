@@ -371,4 +371,64 @@
           loadTeasePhase();
         } else {
           statusBadge.textContent = "焦らし最終カウントダウン…";
-          sFace.textCont
+          sFace.textContent = "💋";
+          lineBox.textContent = "「ちゃんと言うこと聞けてえらいね、いついっていいよって言おうかな？」";
+          subGrid.innerHTML = "";
+          const delayMs = 600 + Math.random() * 1400;
+          setTimeout(triggerGoMoment, delayMs);
+        }
+      } else {
+        triggerShake();
+        const p = teasePhases[phaseIndex];
+        lineBox.textContent = p.wrongReply;
+      }
+    }
+
+    function pressIku() {
+      if (isFinished) return;
+
+      if (!isAllowed) {
+        isFinished = true;
+        triggerShake();
+        playArea.style.display = "none";
+        resultCard.style.display = "flex";
+
+        document.getElementById("resultLabel").textContent = "❌ フライング失格！";
+        document.getElementById("bigTime").textContent = "OUT";
+        document.getElementById("rankTitle").textContent = "称号：我慢ゼロの早漏雑魚";
+        document.getElementById("resultComment").textContent =
+          "「は？まだ『いっていいよ』って言ってないでしょこの早漏！勝手にイくとか本当みっともないゴミね。」";
+        return;
+      }
+
+      isFinished = true;
+      const now = performance.now();
+      const reactionSec = (now - goStartTime) / 1000;
+      const totalSec = (now - gameStartTime) / 1000;
+
+      playArea.style.display = "none";
+      resultCard.style.display = "flex";
+
+      document.getElementById("resultLabel").textContent =
+        `「いっていいよ」からの反応タイム（総合 ${totalSec.toFixed(2)}秒）`;
+      document.getElementById("bigTime").textContent = `${reactionSec.toFixed(3)}秒`;
+
+      let rank = "";
+      let comment = "";
+
+      if (reactionSec < 0.555) {
+        rank = "⚡ 即イキM";
+        comment = "「どんだけ飢えてんの即イキマゾ。画面張り付いて指プルプルさせててめっちゃキモイ」";
+      } else if (reactionSec < 1.0) {
+        rank = "🔥 素直すぎる従順M";
+        comment = "「はいはい、言われた通りにすぐ反応して偉いわね〜♡ ほんと脳みそお花畑の素直すぎる従順Mなんだから、都合よすぎ！」";
+      } else {
+        rank = "🐢 鈍臭いポンコツM";
+        comment = "「1秒もかかってて何やってんの？『いっていいよ』って言われてからボーッとするなよ、この鈍臭いポンコツMが！」";
+      }
+
+      document.getElementById("rankTitle").textContent = rank;
+      document.getElementById("resultComment").textContent = comment;
+    }
+  </script>
+</body>
